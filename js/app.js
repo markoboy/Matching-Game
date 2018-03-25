@@ -1,7 +1,10 @@
 /*
- * Create a list that holds all of your cards
+ * Store the game's deck in a variable and
+ * Create a list that holds all of the cards
  */
 
+const deck = document.querySelector('.deck');
+const cards = deck.children;
 
 /*
  * Display the cards on the page
