@@ -1,10 +1,8 @@
 /*
- * Store the game's deck in a variable and
- * Create a list that holds all of the cards
+ * Store the game's deck in a variable.
  */
 
 const deck = document.querySelector('.deck');
-const cards = deck.children;
 
 /*
  * Display the cards on the page
@@ -28,6 +26,29 @@ function shuffle(array) {
     return array;
 }
 
+/** @description - Create game obj in order to handle the game.
+  * @param {boolean} isActive - Checks if game is running.
+  * @param {boolean} isPaused - Check if game is paused.
+  * @param {function} start - Start the game by shuffling the deck.
+  */
+const game = {
+    'isActive': false,
+    'isPaused': false,
+    'start'   : function() {
+        // Store the list of cards.
+        let cards = Array.from(deck.children);
+        // Shuffle the cards.
+        cards = shuffle(cards);
+        for (let card of cards) {
+            // Remove any previous data that the card had.
+            card.classList.remove('show', 'open', 'match');
+            deck.appendChild(card);
+        }
+        // Start the game.
+        game.isActive = true;
+        // TODO: Create timer.
+    }
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -39,3 +60,8 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+/*
+ * Add DOMContentLoaded event to document for a fresh start.
+ */
+// document.addEventListener('DOMContentLoaded', newGame);
