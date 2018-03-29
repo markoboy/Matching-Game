@@ -139,12 +139,12 @@ const player = {
         let star = stars.children;
         // Set stars score based on moves.
         switch (player.moves) {
-            case 13:
+            case 15:
                 player.stars--;
                 // Empty last star.
                 star[2].children[0].className = 'fa fa-star-o';
                 break;
-            case 19:
+            case 21:
                 player.stars--;
                 // Empty second star.
                 star[1].children[0].className = 'fa fa-star-o';
