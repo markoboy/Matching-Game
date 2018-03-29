@@ -54,6 +54,7 @@ const game = {
   * @param {array} isOpened - List opened cards to match.
   * @param {integer} matched - Counts the opened cards.
   * @param {function} open - Function to open cards.
+  * @param {function} check - Function to check if cards are matched or not.
   */
 const card = {
     'isOpened': [],
@@ -73,8 +74,12 @@ const card = {
                     card.isOpened.push(picked);
                     break;
                 case 1:
-                    card.check(picked, card.isOpened[0])
-                    console.log('Check if cards are the same.');
+                    // Display card.
+                    picked.classList.add('open', 'show');
+                    // Store newCard so that only two cards are opened.
+                    card.isOpened.push(picked);
+                    card.check(picked, card.isOpened[0]);
+                    break;
             }
         } else if (!game.isActive) {
             game.start();
@@ -82,8 +87,36 @@ const card = {
         }
     },
     'check'   : function(newCard, oldCard) {
-        // Display card.
-        newCard.classList.add('open', 'show');
+        // Check if cards are the same.
+        if (newCard.children[0].className === oldCard.children[0].className) {
+            // Match the cards.
+            newCard.classList.add('match');
+            oldCard.classList.add('match');
+            // Increase matched cards.
+            card.matched += 2;
+            // Clear opened cards.
+            card.isOpened = [];
+            // Increase player moves.
+            // player.moves++;
+
+            // Check if player has opened all cards.
+            // if (card.matched === deck.children.length) {
+            //     setTimeout(game.end, 500);
+            // }
+        } else {
+            // Add unMatch class.
+            newCard.classList.add('unMatched');
+            oldCard.classList.add('unMatched');
+            setTimeout(function() {
+                // Hide cards.
+                newCard.classList.remove('open', 'show', 'unMatched');
+                oldCard.classList.remove('open', 'show', 'unMatched');
+                // Clear opened cards.
+                card.isOpened = [];
+                // Increase player moves.
+                // player.moves++;
+            }, 700);
+        }
     }
 }
 
