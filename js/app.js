@@ -5,6 +5,9 @@
 const deck = document.querySelector('.deck');
 // Store stars board.
 const stars = document.querySelector('.stars');
+// Store displayed time.
+const displayedMin = document.querySelector('.minutes');
+const displayedSec = document.querySelector('.seconds');
 
 /*
  * Display the cards on the page
@@ -32,6 +35,7 @@ function shuffle(array) {
   * @param {boolean} isActive - Checks if game is running.
   * @param {boolean} isPaused - Check if game is paused.
   * @param {function} start - Start the game by shuffling the deck.
+  * @param {object} time - Create a time obj to handle the timer.
   */
 const game = {
     'isActive': false,
@@ -48,7 +52,36 @@ const game = {
         }
         // Start the game.
         game.isActive = true;
-        // TODO: Create timer.
+        // Start the timer.
+        setTimeout(game.time.start, 1000);
+    },
+    'time'    : {
+        'minutes': 0,
+        'seconds': 0,
+        'start'  : function() {
+            // Increase seconds and display it.
+            game.time.seconds++;
+            game.time.display(displayedSec, game.time.seconds);
+            // Check if it is needs to increase the minutes.
+            switch (game.time.seconds) {
+                case 60:
+                    game.time.seconds = 0;
+                    game.time.display(displayedSec, game.time.seconds);
+                    game.time.minutes++;
+                    game.time.display(displayedMin, game.time.minutes);
+                    break;
+            }
+            setTimeout(game.time.start, 1000);
+        },
+        'display' : function(element, time) {
+            // Display 0 infront of the time.
+            element.textContent = time < 10 ? `0${time}` : time;
+            // if (time < 10) {
+            //     element.textContent = `0${time}`;
+            // } else {
+            //     element.textContent = time;
+            // }
+        }
     }
 }
 
