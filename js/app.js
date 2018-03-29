@@ -3,6 +3,8 @@
  */
 
 const deck = document.querySelector('.deck');
+// Store stars board.
+const stars = document.querySelector('.stars');
 
 /*
  * Display the cards on the page
@@ -83,12 +85,13 @@ const card = {
             }
         } else if (!game.isActive) {
             game.start();
-            console.log('Game started');
         }
     },
     'check'   : function(newCard, oldCard) {
         // Check if cards are the same.
         if (newCard.children[0].className === oldCard.children[0].className) {
+            // Change player's score.
+            player.score();
             // Match the cards.
             newCard.classList.add('match');
             oldCard.classList.add('match');
@@ -96,14 +99,14 @@ const card = {
             card.matched += 2;
             // Clear opened cards.
             card.isOpened = [];
-            // Increase player moves.
-            // player.moves++;
 
             // Check if player has opened all cards.
             // if (card.matched === deck.children.length) {
             //     setTimeout(game.end, 500);
             // }
         } else {
+            // Change player's score.
+            player.score();
             // Add unMatch class.
             newCard.classList.add('unMatched');
             oldCard.classList.add('unMatched');
@@ -113,9 +116,39 @@ const card = {
                 oldCard.classList.remove('open', 'show', 'unMatched');
                 // Clear opened cards.
                 card.isOpened = [];
-                // Increase player moves.
-                // player.moves++;
             }, 700);
+        }
+    }
+}
+
+/** @description - Create player obj to handle player actions.
+  * @param {string} name - Player's name for scoreboard.
+  * @param {integer} moves - Count player's moves.
+  * @param {integer} stars - Count player's stars.
+  * @param {function} score - Change players score based on the actions.
+  */
+const player = {
+    'name' : 'player',
+    'moves': 0,
+    'stars': 3,
+    'score': function() {
+        // Increase player moves.
+        player.moves++;
+        document.querySelector('.moves').textContent = player.moves;
+        // Store stars children.
+        let star = stars.children;
+        // Set stars score based on moves.
+        switch (player.moves) {
+            case 13:
+                player.stars--;
+                // Empty last star.
+                star[2].children[0].className = 'fa fa-star-o';
+                break;
+            case 19:
+                player.stars--;
+                // Empty second star.
+                star[1].children[0].className = 'fa fa-star-o';
+                break;
         }
     }
 }
