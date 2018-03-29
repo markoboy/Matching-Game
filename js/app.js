@@ -76,11 +76,6 @@ const game = {
         'display' : function(element, time) {
             // Display 0 infront of the time.
             element.textContent = time < 10 ? `0${time}` : time;
-            // if (time < 10) {
-            //     element.textContent = `0${time}`;
-            // } else {
-            //     element.textContent = time;
-            // }
         }
     }
 }
