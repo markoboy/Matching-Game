@@ -51,6 +51,7 @@ function shuffle(array) {
   */
 const game = {
     'isActive': false,
+    'timer'   : '',
     'start'   : function() {
         // Hide idle button and remove event listener.
         actionButton.classList.add('hide');
@@ -67,12 +68,14 @@ const game = {
         // Start the game.
         game.isActive = true;
         // Start the timer.
-        setTimeout(game.time.start, 1000);
+        game.timer = setTimeout(game.time.start, 1000);
     },
     'end'     : function() {
         if (game.isActive) {
             // Stops the game.
             game.isActive = false;
+            // Stop the timer.
+            clearTimeout(game.timer);
             // Show player's name in the scoreboard.
             if (player.name !== 'player') {
                 playerName.textContent = player.name;
@@ -97,6 +100,7 @@ const game = {
             player.resetScore();
             // Reset game's time.
             game.time.reset();
+            clearTimeout(game.timer);
             // Restart the game.
             game.start();
         } else {
@@ -120,7 +124,7 @@ const game = {
                         game.time.display(displayedMin, game.time.minutes);
                         break;
                 }
-                setTimeout(game.time.start, 1000);
+                game.timer = setTimeout(game.time.start, 1000);
             }
         },
         'display' : function(element, time) {
