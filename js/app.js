@@ -73,14 +73,20 @@ const game = {
                 playerName.textContent = player.name;
             }
             // Set star rating.
-            stats[0].innerHTML += `<ul>${stars.innerHTML}</ul>`;
+            stats[0].firstElementChild.innerHTML = `<ul>${stars.innerHTML}</ul>`;
             // Set time.
-            stats[1].textContent += `${displayedMin.textContent} : ${displayedSec.textContent}`;
+            stats[1].firstElementChild.textContent = `${displayedMin.textContent} : ${displayedSec.textContent}`;
             // Set move.
-            stats[2].textContent += player.moves;
+            stats[2].firstElementChild.textContent = player.moves;
             // Display the score-board.
             scoreBoard.classList.add('show');
         }
+    },
+    'restart' : function() {
+        // Reset player's score.
+        player.resetScore();
+        // Reset game's time.
+        game.time.reset();
     },
     'time'    : {
         'minutes': 0,
@@ -105,6 +111,14 @@ const game = {
         'display' : function(element, time) {
             // Display 0 infront of the time.
             element.textContent = time < 10 ? `0${time}` : time;
+        },
+        'reset'   : function() {
+            // Set game's time to 0.
+            game.time.minutes = 0;
+            game.time.seconds = 0;
+            // Display the time in the document.
+            game.time.display(displayedMin, game.time.minutes);
+            game.time.display(displayedSec, game.time.seconds);
         }
     }
 }
@@ -156,9 +170,9 @@ const card = {
             card.isOpened = [];
 
             // Check if player has opened all cards.
-            // if (card.matched === deck.children.length) {
-            //     setTimeout(game.end, 500);
-            // }
+            if (card.matched === deck.children.length) {
+                setTimeout(game.end, 200);
+            }
         } else {
             // Change player's score.
             player.score();
@@ -204,6 +218,16 @@ const player = {
                 // Empty second star.
                 star[1].children[0].className = 'fa fa-star-o';
                 break;
+        }
+    },
+    'resetScore': function() {
+        // Reset player's moves.
+        player.moves = 0;
+        document.querySelector('.moves').textContent = player.moves;
+        // Reset player's stars.
+        player.stars = 0;
+        for (star of stars.children) {
+            star.children[0].className = 'fa fa-star';
         }
     }
 }
