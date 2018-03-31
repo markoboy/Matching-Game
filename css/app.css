@@ -141,9 +141,15 @@ h1 {
     cursor: pointer;
 }
 
+.score-panel .pause {
+    float: right;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
 .score-panel .time {
     float: right;
-    padding-right: 2em;
+    margin-right: 1em;
 }
 
 /*
