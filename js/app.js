@@ -16,8 +16,6 @@ const actionButton = document.querySelector('.btn_container');
 const scoreBoard = document.querySelector('.score-board');
 const playerName = document.querySelector('#playerName');
 const stats = document.querySelectorAll('.stats .stats_rating');
-// Store score-board starting html.
-const scoreBoardHTML = scoreBoard.innerHTML;
 // Store buttons.
 const playAgain = document.querySelector('#playAgain');
 const close = document.querySelector('#close');
@@ -91,21 +89,18 @@ const game = {
         }
     },
     'restart' : function() {
-        if (game.isActive) {
-            // Hide score-board.
-            scoreBoard.classList.remove('show');
-            // Reset score-board HTML.
-            scoreBoard.innerHTML = scoreBoardHTML;
-            // Reset player's score (moves and stars).
-            player.resetScore();
-            // Reset game's time.
-            game.time.reset();
-            clearTimeout(game.timer);
-            // Restart the game.
-            game.start();
-        } else {
-            console.log('Start the game first.');
-        }
+        // Hide score-board.
+        scoreBoard.classList.remove('show');
+        // Reset matched cards.
+        card.matched = 0;
+        card.isOpened = [];
+        // Reset player's score (moves and stars).
+        player.resetScore();
+        // Reset game's time.
+        game.time.reset();
+        clearTimeout(game.timer);
+        // Restart the game.
+        game.start();
     },
     'time'    : {
         'minutes': 0,
@@ -275,5 +270,5 @@ close.addEventListener('click', function() {
     scoreBoard.classList.remove('show');
     // Show idle button and add event listener.
     actionButton.classList.remove('hide');
-    actionButton.addEventListener('click', game.start);
+    actionButton.addEventListener('click', game.restart);
 });
