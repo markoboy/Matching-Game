@@ -41,13 +41,11 @@ function shuffle(array) {
 
 /** @description - Create game obj in order to handle the game.
   * @param {boolean} isActive - Checks if game is running.
-  * @param {boolean} isPaused - Check if game is paused.
   * @param {function} start - Start the game by shuffling the deck.
   * @param {object} time - Create a time obj to handle the timer.
   */
 const game = {
     'isActive': false,
-    'isPaused': false,
     'start'   : function() {
         // Hide idle button and remove event listener.
         actionButton.classList.add('hide');
@@ -104,7 +102,7 @@ const game = {
         'minutes': 0,
         'seconds': 0,
         'start'  : function() {
-            if (game.isActive && !game.isPaused) {
+            if (game.isActive) {
                 // Increase seconds and display it.
                 game.time.seconds++;
                 game.time.display(displayedSec, game.time.seconds);
@@ -146,7 +144,7 @@ const card = {
     'matched' : 0,
     'open'    : function(e) {
         // Check if the target is a card and game is running.
-        if (e.target.nodeName === 'LI' && e.target.className === 'card' && game.isActive && !game.isPaused) {
+        if (e.target.nodeName === 'LI' && e.target.className === 'card' && game.isActive) {
             // Store clicked card in a variable.
             let picked = e.target;
             // Check how many cards are opened.
