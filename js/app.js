@@ -41,6 +41,7 @@ function shuffle(array) {
   * @param {function} start - Start the game by shuffling the deck.
   * @param {function} end - End the game by showing a score-board.
   * @param {function} restart - Restart the game by reseting everything.
+  * @param {function} idle - Sets the game in idle state to shuffle and show cards.
   * @param {object} time - Create a time obj to handle the timer.
   */
 
@@ -48,6 +49,9 @@ const game = {
     'isActive': false,
     'timer'   : 0,
     'start'   : function() {
+        // Remove idle timer.
+        clearTimeout(game.timer);
+
         // Hide idle button and remove event listener.
         actionButton.classList.add('hide');
         actionButton.removeEventListener('click', game.start);
@@ -73,6 +77,9 @@ const game = {
             game.isActive = false;
             // Stop the timer.
             clearTimeout(game.timer);
+
+            // Set game in idle state.
+            game.idle();
 
             // Show player's name in the scoreboard.
             if (player.name !== 'player') {
