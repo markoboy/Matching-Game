@@ -14,6 +14,8 @@ const actionButton = document.querySelector('.btn_container');
 const scoreBoard = document.querySelector('.score-board');
 const playerName = document.querySelector('#playerName');
 const stats = document.querySelectorAll('.stats .stats_rating');
+// Store score-board starting html.
+const scoreBoardHTML = scoreBoard.innerHTML;
 
 /*
  * Display the cards on the page
@@ -83,10 +85,20 @@ const game = {
         }
     },
     'restart' : function() {
-        // Reset player's score.
-        player.resetScore();
-        // Reset game's time.
-        game.time.reset();
+        if (game.isActive) {
+            // Hide score-board.
+            scoreBoard.classList.remove('show');
+            // Reset score-board HTML.
+            scoreBoard.innerHTML = scoreBoardHTML;
+            // Reset player's score (moves and stars).
+            player.resetScore();
+            // Reset game's time.
+            game.time.reset();
+            // Restart the game.
+            game.start();
+        } else {
+            console.log('Start the game first.');
+        }
     },
     'time'    : {
         'minutes': 0,
