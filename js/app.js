@@ -8,6 +8,8 @@ const stars = document.querySelector('.stars');
 // Store displayed time.
 const displayedMin = document.querySelector('.minutes');
 const displayedSec = document.querySelector('.seconds');
+// Store restart button.
+const restartBtn = document.querySelector('.restart');
 // Store idle button container.
 const actionButton = document.querySelector('.btn_container');
 // Store score-board contents.
@@ -16,6 +18,9 @@ const playerName = document.querySelector('#playerName');
 const stats = document.querySelectorAll('.stats .stats_rating');
 // Store score-board starting html.
 const scoreBoardHTML = scoreBoard.innerHTML;
+// Store buttons.
+const playAgain = document.querySelector('#playAgain');
+const close = document.querySelector('#close');
 
 /*
  * Display the cards on the page
@@ -60,14 +65,14 @@ const game = {
             deck.appendChild(card);
         }
         // Start the game.
-        game.isActive = !game.isActive;
+        game.isActive = true;
         // Start the timer.
         setTimeout(game.time.start, 1000);
     },
     'end'     : function() {
         if (game.isActive) {
             // Stops the game.
-            game.isActive = !game.isActive;
+            game.isActive = false;
             // Show player's name in the scoreboard.
             if (player.name !== 'player') {
                 playerName.textContent = player.name;
@@ -253,4 +258,18 @@ const player = {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 deck.addEventListener('click', card.open);
+
+// Start the game by pressing the play button.
 actionButton.addEventListener('click', game.start);
+
+// Restart button event.
+restartBtn.addEventListener('click', game.restart);
+playAgain.addEventListener('click', game.restart);
+
+// Close score-board window.
+close.addEventListener('click', function() {
+    scoreBoard.classList.remove('show');
+    // Show idle button and add event listener.
+    actionButton.classList.remove('hide');
+    actionButton.addEventListener('click', game.start);
+});
