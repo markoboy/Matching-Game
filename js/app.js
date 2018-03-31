@@ -108,6 +108,33 @@ const game = {
         // Restart the game.
         game.start();
     },
+    'idle'    : function() {
+        if (!game.isActive) {
+            // Store the list of cards.
+            let cards = Array.from(deck.children);
+            // Shuffle the cards.
+            cards = shuffle(cards);
+            for (let card of cards) {
+                // Show cards randomly.
+                if (Math.random() > 0.85) {
+                    card.classList.add('show', 'open', 'unMatched');
+                } else if (Math.random() < 0.16) {
+                    card.classList.add('show', 'open', 'match');
+                } else if (Math.random() > 0.48) {
+                    card.classList.add('show', 'open');
+                    card.classList.remove('match', 'unMatched');
+                } else {
+                    card.classList.remove('show', 'open', 'match', 'unMatched');
+                }
+
+                // Display the card.
+                deck.appendChild(card);
+            }
+
+            //Set timer to play every 3 seconds.
+            game.timer = setTimeout(game.idle, 3000);
+        }
+    },
     'time'    : {
         'minutes': 0,
         'seconds': 0,
@@ -284,3 +311,6 @@ close.addEventListener('click', function() {
     actionButton.classList.remove('hide');
     actionButton.addEventListener('click', game.restart);
 });
+
+// Set up game in idle mode when loaded.
+document.addEventListener('DOMContentLoaded', game.idle);
