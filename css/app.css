@@ -177,6 +177,18 @@ h1 {
     width: 40%;
 }
 
+.stats_rating ul {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.stats_rating ul li {
+    list-style: none;
+    display: inline-block;
+}
+
 .btn {
     margin: 0 3px 15px;
     padding: 3px 8px;

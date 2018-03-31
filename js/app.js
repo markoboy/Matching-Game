@@ -8,6 +8,12 @@ const stars = document.querySelector('.stars');
 // Store displayed time.
 const displayedMin = document.querySelector('.minutes');
 const displayedSec = document.querySelector('.seconds');
+// Store idle button container.
+const actionButton = document.querySelector('.btn_container');
+// Store score-board contents.
+const scoreBoard = document.querySelector('.score-board');
+const playerName = document.querySelector('#playerName');
+const stats = document.querySelectorAll('.stats .stats_rating');
 
 /*
  * Display the cards on the page
@@ -41,37 +47,60 @@ const game = {
     'isActive': false,
     'isPaused': false,
     'start'   : function() {
+        // Hide idle button and remove event listener.
+        actionButton.classList.add('hide');
+        actionButton.removeEventListener('click', game.start);
         // Store the list of cards.
         let cards = Array.from(deck.children);
         // Shuffle the cards.
         cards = shuffle(cards);
         for (let card of cards) {
             // Remove any previous data that the card had.
-            card.classList.remove('show', 'open', 'match');
+            card.classList.remove('show', 'open', 'match', 'unMatched');
             deck.appendChild(card);
         }
         // Start the game.
-        game.isActive = true;
+        game.isActive = !game.isActive;
         // Start the timer.
         setTimeout(game.time.start, 1000);
+    },
+    'end'     : function() {
+        if (game.isActive) {
+            // Stops the game.
+            game.isActive = !game.isActive;
+            // Show player's name in the scoreboard.
+            if (player.name !== 'player') {
+                playerName.textContent = player.name;
+            }
+            // Set star rating.
+            stats[0].innerHTML += `<ul>${stars.innerHTML}</ul>`;
+            // Set time.
+            stats[1].textContent += `${displayedMin.textContent} : ${displayedSec.textContent}`;
+            // Set move.
+            stats[2].textContent += player.moves;
+            // Display the score-board.
+            scoreBoard.classList.add('show');
+        }
     },
     'time'    : {
         'minutes': 0,
         'seconds': 0,
         'start'  : function() {
-            // Increase seconds and display it.
-            game.time.seconds++;
-            game.time.display(displayedSec, game.time.seconds);
-            // Check if it is needs to increase the minutes.
-            switch (game.time.seconds) {
-                case 60:
-                    game.time.seconds = 0;
-                    game.time.display(displayedSec, game.time.seconds);
-                    game.time.minutes++;
-                    game.time.display(displayedMin, game.time.minutes);
-                    break;
+            if (game.isActive && !game.isPaused) {
+                // Increase seconds and display it.
+                game.time.seconds++;
+                game.time.display(displayedSec, game.time.seconds);
+                // Check if it is needs to increase the minutes.
+                switch (game.time.seconds) {
+                    case 60:
+                        game.time.seconds = 0;
+                        game.time.display(displayedSec, game.time.seconds);
+                        game.time.minutes++;
+                        game.time.display(displayedMin, game.time.minutes);
+                        break;
+                }
+                setTimeout(game.time.start, 1000);
             }
-            setTimeout(game.time.start, 1000);
         },
         'display' : function(element, time) {
             // Display 0 infront of the time.
@@ -91,7 +120,7 @@ const card = {
     'matched' : 0,
     'open'    : function(e) {
         // Check if the target is a card and game is running.
-        if (e.target.nodeName === 'LI' && e.target.className === 'card' && game.isActive) {
+        if (e.target.nodeName === 'LI' && e.target.className === 'card' && game.isActive && !game.isPaused) {
             // Store clicked card in a variable.
             let picked = e.target;
             // Check how many cards are opened.
@@ -111,8 +140,6 @@ const card = {
                     card.check(picked, card.isOpened[0]);
                     break;
             }
-        } else if (!game.isActive) {
-            game.start();
         }
     },
     'check'   : function(newCard, oldCard) {
@@ -192,3 +219,4 @@ const player = {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 deck.addEventListener('click', card.open);
+actionButton.addEventListener('click', game.start);
