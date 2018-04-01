@@ -222,3 +222,41 @@ h1 {
 .btn.close {
     background: linear-gradient(rgba(180, 0, 20, 0.7), rgba(180, 0, 20, 0.9), rgba(180, 0, 20, 0.7));
 }
+
+/*
+ * Pop up windows.
+ */
+ .pop-up {
+     position: absolute;
+     top: 25%;
+     min-width: 500px;
+     background-color: white;
+     background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9));
+     border: 1px solid black;
+     border-radius: 12px;
+     box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.3);
+     text-align: center;
+
+     transform: translate(-9999px, 0);
+     opacity: 0;
+     transition: opacity 1s ease, transform 1s ease;
+}
+
+.pop-up.show {
+    transform: translate(0, 0);
+    opacity: 1;
+    transition: opacity 1s ease, transform 0.3s ease;
+}
+
+.start-up ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 10px;
+}
+
+.start-up input {
+    padding: 3px 5px;
+    margin-left: 5px;
+    width: 10em;
+    border-radius: 8px;
+}
