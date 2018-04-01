@@ -119,6 +119,11 @@ const game = {
 
             // Restart the game.
             game.start();
+        } else {
+            // Show the player next action to do.
+            startUp.classList.add('invalid');
+            // Remove the class in order for the animation to play again.
+            let timer = setTimeout(() => {startUp.classList.remove('invalid');}, 1000);
         }
     },
     'idle'    : function() {
@@ -330,13 +335,12 @@ const popUp = {
 
             // Start the game.
             game.start();
-        } else if (playerInput.classList.length > 0) {
-            // Check if the input has already invalid class.
-            playerInput.classList.add('invalid');
-            playerInput.classList.remove('invalid');
         } else if (playerInput.value === '') {
             // Add invalid class.
             playerInput.classList.add('invalid');
+
+            // Remove the class in order for the animation to play again.
+            let timer = setTimeout(() => {playerInput.classList.remove('invalid');}, 1000);
         }
     }
 }

@@ -263,11 +263,17 @@ h1 {
 }
 
 .start-up input.invalid {
-    animation: wrongInput 3s linear;
+    animation: wrongInput 1s linear;
+}
+
+.start-up.invalid {
+    animation: wrongAction 1s linear;
 }
 
 @keyframes wrongInput {
-    0% {background: white;}
     50% {background: red;}
-    100% {background: white;}
+}
+
+@keyframes wrongAction {
+    50% {border: 2.5px solid red;}
 }
