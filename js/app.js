@@ -342,7 +342,7 @@ const popUp = {
 deck.addEventListener('click', card.open);
 
 // Start the game by pressing the play button.
-actionButton.addEventListener('click', game.start);
+actionButton.firstElementChild.addEventListener('click', game.start);
 
 // Restart button event.
 restartBtn.addEventListener('click', game.restart);
@@ -354,7 +354,7 @@ close.addEventListener('click', function() {
 
     // Show idle button and add event listener.
     actionButton.classList.remove('hide');
-    actionButton.addEventListener('click', game.restart);
+    actionButton.firstElementChild.addEventListener('click', game.restart);
 });
 
 // Set up game in idle mode when loaded.
