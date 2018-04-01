@@ -20,6 +20,10 @@ const stats = document.querySelectorAll('.stats .stats_rating');
 const playAgain = document.querySelector('#playAgain');
 const close = document.querySelector('#close');
 
+// Starting window selectors.
+const startUp = document.querySelector('.start-up');
+const letsPlay = document.querySelector('#letsPlay');
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -82,7 +86,7 @@ const game = {
             game.idle();
 
             // Show player's name in the scoreboard.
-            if (player.name !== 'player') {
+            if (player.name !== '') {
                 playerName.textContent = player.name;
             }
 
@@ -300,6 +304,33 @@ const player = {
     }
 }
 
+/** @description - Create popUp obj to handle pop-up windows.
+  * @param {boolean} isActive - Check if the popUp window is active.
+  * @param {function} toggle - Hide or show the popUp window.
+  * @param {function} letsPlay - Start the game and hide the popUp window.
+  */
+const popUp = {
+    'isActive' : false,
+    'toggle'   : function() {
+        // Toggle window (close or open).
+        popUp.isActive = !popUp.isActive;
+        // Toggle class to open or close.
+        startUp.classList.toggle('show');
+    },
+    'letsPlay'  : function() {
+        // Check if player has input his name.
+        let playerInput = document.querySelector('#player');
+        if (playerInput.value !== '' && popUp.isActive) {
+            // Store player's name.
+            player.name = playerInput.value;
+            // Close window.
+            popUp.toggle();
+
+            // Start the game.
+            game.start();
+        }
+    }
+}
 // Set up the event listener for a card. If a card is clicked.
 deck.addEventListener('click', card.open);
 
@@ -321,3 +352,8 @@ close.addEventListener('click', function() {
 
 // Set up game in idle mode when loaded.
 document.addEventListener('DOMContentLoaded', game.idle);
+
+// Open start up window when loaded.
+window.onload = popUp.toggle;
+// Add event listener to play button to start the game.
+letsPlay.addEventListener('click', popUp.letsPlay);
