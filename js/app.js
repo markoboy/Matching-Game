@@ -373,3 +373,24 @@ letsPlay.addEventListener('click', popUp.letsPlay);
 startUp.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {popUp.letsPlay();}
 });
+
+// Add event listener to document keypress.
+document.addEventListener('keypress', function(e) {
+    // Check which key was pressed.
+    switch (e.code) {
+        case 'Space':
+            // Prevent scroling the page.
+            e.preventDefault();
+
+            // Pause or unpause the game.
+            game.pause();
+            break;
+        case 'KeyR':
+            // Prevent to restart when player is inputing his name.
+            if (e.target.id !== 'player') {
+                // Restart the game.
+                game.restart();
+            }
+            break;
+    }
+});
