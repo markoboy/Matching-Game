@@ -254,9 +254,20 @@ h1 {
     margin: 0 auto 10px;
 }
 
+/* Styles for player name placeholder */
 .start-up input {
     padding: 3px 5px;
     margin-left: 5px;
     width: 10em;
     border-radius: 8px;
+}
+
+.start-up input.invalid {
+    animation: wrongInput 3s linear;
+}
+
+@keyframes wrongInput {
+    0% {background: white;}
+    50% {background: red;}
+    100% {background: white;}
 }

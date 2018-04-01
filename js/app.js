@@ -328,6 +328,13 @@ const popUp = {
 
             // Start the game.
             game.start();
+        } else if (playerInput.classList.length > 0) {
+            // Check if the input has already invalid class.
+            playerInput.classList.add('invalid');
+            playerInput.classList.remove('invalid');
+        } else if (playerInput.value === '') {
+            // Add invalid class.
+            playerInput.classList.add('invalid');
         }
     }
 }
@@ -357,3 +364,6 @@ document.addEventListener('DOMContentLoaded', game.idle);
 window.onload = popUp.toggle;
 // Add event listener to play button to start the game.
 letsPlay.addEventListener('click', popUp.letsPlay);
+startUp.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {popUp.letsPlay();}
+});
