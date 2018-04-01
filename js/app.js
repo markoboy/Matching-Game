@@ -102,22 +102,24 @@ const game = {
         }
     },
     'restart' : function() {
-        // Hide score-board.
-        scoreBoard.classList.remove('show');
+        if (!popUp.isActive) {
+            // Hide score-board.
+            scoreBoard.classList.remove('show');
 
-        // Reset matched cards.
-        card.matched = 0;
-        card.isOpened = [];
+            // Reset matched cards.
+            card.matched = 0;
+            card.isOpened = [];
 
-        // Reset player's score (moves and stars).
-        player.resetScore();
+            // Reset player's score (moves and stars).
+            player.resetScore();
 
-        // Reset game's time.
-        game.time.reset();
-        clearTimeout(game.timer);
+            // Reset game's time.
+            game.time.reset();
+            clearTimeout(game.timer);
 
-        // Restart the game.
-        game.start();
+            // Restart the game.
+            game.start();
+        }
     },
     'idle'    : function() {
         if (!game.isActive) {
