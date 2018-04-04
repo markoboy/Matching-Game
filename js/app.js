@@ -8,6 +8,8 @@ const displayedMin = document.querySelector('.minutes');
 const displayedSec = document.querySelector('.seconds');
 // Store restart button.
 const restartBtn = document.querySelector('.restart');
+// Store paused button.
+const pauseBtn = document.querySelector('.pause');
 
 // Store idle button container.
 const actionButton = document.querySelector('.btn_container');
@@ -41,16 +43,19 @@ function shuffle(array) {
 
 /** @description - Create game obj in order to handle the game.
   * @param {boolean} isActive - Checks if game is running.
+  * @param {boolean} isPaused - Checks if game is paused.
   * @param {number} timer - Store the game's timer.
   * @param {function} start - Start the game by shuffling the deck.
   * @param {function} end - End the game by showing a score-board.
   * @param {function} restart - Restart the game by reseting everything.
   * @param {function} idle - Sets the game in idle state to shuffle and show cards.
+  * @param {function} pause - Pause or unpause the game.
   * @param {object} time - Create a time obj to handle the timer.
   */
 
 const game = {
     'isActive': false,
+    'isPaused': false,
     'timer'   : 0,
     'start'   : function() {
         // Remove idle timer.
@@ -58,7 +63,7 @@ const game = {
 
         // Hide idle button and remove event listener.
         actionButton.classList.add('hide');
-        actionButton.removeEventListener('click', game.start);
+        actionButton.firstElementChild.removeEventListener('click', game.start);
 
         // Store the list of cards.
         let cards = Array.from(deck.children);
@@ -151,6 +156,33 @@ const game = {
 
             //Set timer to play every 3 seconds.
             game.timer = setTimeout(game.idle, 3000);
+        }
+    },
+    'pause'   : function() {
+        // Check if game is active.
+        if (game.isActive && !popUp.isActive && !game.isPaused) {
+            // Pause the game.
+            game.isPaused = true;
+            // Stop the timer.
+            clearTimeout(game.timer);
+
+            // Show the play button.
+            actionButton.classList.remove('hide');
+            // Remove previous event listener.
+            actionButton.firstElementChild.removeEventListener('click', game.start);
+            actionButton.firstElementChild.removeEventListener('click', game.restart);
+            // Add new event listener to unpause the game.
+            actionButton.firstElementChild.addEventListener('click', game.pause);
+        } else if (game.isActive && !popUp.isActive && game.isPaused) {
+            // Unpause the game.
+            game.isPaused = false;
+            // Start the timer.
+            game.timer = setTimeout(game.time.start, 1000);
+
+            // Hide the play button.
+            actionButton.classList.add('hide');
+            // Remove previous event listener.
+            actionButton.firstElementChild.removeEventListener('click', game.pause);
         }
     },
     'time'    : {
@@ -349,6 +381,9 @@ deck.addEventListener('click', card.open);
 
 // Start the game by pressing the play button.
 actionButton.firstElementChild.addEventListener('click', game.start);
+
+// Pause the game by pressing the pause button.
+pauseBtn.addEventListener('click', game.pause);
 
 // Restart button event.
 restartBtn.addEventListener('click', game.restart);
