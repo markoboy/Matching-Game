@@ -414,8 +414,8 @@ document.addEventListener('keypress', function(e) {
     // Check which key was pressed.
     switch (e.code) {
         case 'Space':
-            // Prevent scroling the page.
-            e.preventDefault();
+            // Prevent scroling the page if not on start up window.
+            if (!popUp.isActive) {e.preventDefault();}
 
             // Pause or unpause the game.
             game.pause();
