@@ -327,3 +327,37 @@ h1 {
         max-width: 500px;
     }
 }
+
+/* Styles for medium screens */
+@media screen and (max-width: 580px) {
+    /* Idle action button style */
+    .idle .btn_container {
+        min-width: 400px;
+        min-height: 420px;
+    }
+
+    .deck {
+        width: 400px;
+        min-height: 420px;
+    }
+
+    .deck .card {
+        width: 70px;
+        height: 70px;
+    }
+
+    .deck .card.show {
+        font-size: 22px;
+    }
+
+    .score-board {
+        min-width: 200px;
+        max-width: 380px;
+    }
+
+    .pop-up {
+        min-width: 200px;
+        max-width: 380px;
+        top: 5%;
+    }
+}
