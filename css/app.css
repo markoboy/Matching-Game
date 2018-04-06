@@ -361,3 +361,41 @@ h1 {
         top: 5%;
     }
 }
+
+/* Styles for small screens */
+@media screen and (max-width: 445px) {
+    /* Idle action button style */
+    .idle .btn_container {
+        min-width: 292px;
+        min-height: 292px;
+    }
+
+    .deck {
+        width: 292px;
+        min-height: 292px;
+    }
+
+    .deck .card {
+        width: 48px;
+        height: 48px;
+    }
+
+    .deck .card.show {
+        font-size: 18px;
+    }
+
+    .score-panel {
+        width: 80vw;
+    }
+
+    .score-board {
+        min-width: 200px;
+        max-width: 95vw;
+    }
+
+    .pop-up {
+        min-width: 200px;
+        max-width: 95vw;
+        top: 5%;
+    }
+}
