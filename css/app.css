@@ -296,3 +296,34 @@ h1 {
 @keyframes wrongAction {
     50% {border: 2.5px solid red;}
 }
+
+/*
+ * Styles for different screens with @media.
+ */
+
+/* Large screen styles */
+@media screen and (max-width: 750px) {
+    /* Idle action button style */
+    .idle .btn_container {
+        min-width: 520px;
+        min-height: 520px;
+    }
+
+    .deck {
+        width: 520px;
+        min-height: 520px;
+    }
+
+    .deck .card {
+        width: 100px;
+        height: 100px;
+    }
+
+    .deck .card.show {
+        font-size: 26px;
+    }
+
+    .pop-up, .score-board {
+        max-width: 500px;
+    }
+}
